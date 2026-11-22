@@ -1,0 +1,10 @@
+node_modules/
+dist/
+.astro/
+.wrangler/
+coverage/
+playwright-report/
+test-results/
+src/data/github.json
+.env*
+.dev.vars
