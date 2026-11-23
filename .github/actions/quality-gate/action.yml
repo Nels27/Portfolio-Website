@@ -26,3 +26,9 @@ runs:
     - name: G3 and G4 unit tests and coverage
       shell: bash
       run: npm run test:unit
+    - name: G5 content integrity and build
+      shell: bash
+      env:
+        GH_GRAPHQL_TOKEN: ${{ inputs.github-token }}
+        SITE_URL: ${{ inputs.site-url }}
+      run: npm run build

@@ -1,0 +1,9 @@
+- id: bs-electrical-engineering
+  date: "2019-05"
+  title: BS, Electrical Engineering
+  kind: education
+- id: ms-computer-science
+  date: "TODO(owner): degree date"
+  title: MS, Computer Science, Computational Perception and Robotics
+  kind: education
+  detail: Georgia Institute of Technology, in progress

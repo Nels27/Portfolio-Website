@@ -9,7 +9,7 @@
   "scripts": {
     "dev": "astro dev",
     "check": "astro check",
-    "build": "astro build",
+    "build": "npm run check:content && astro build",
     "test:unit": "vitest run --coverage",
     "check:content": "tsx scripts/check-content.ts"
   },
