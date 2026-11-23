@@ -1,0 +1,35 @@
+{
+  "fetchedAt": "2026-01-01T00:00:00.000Z",
+  "source": "fixture",
+  "repos": {
+    "Nels27/AgentsOfOlympus": {
+      "nameWithOwner": "Nels27/AgentsOfOlympus",
+      "description": "Fixture description",
+      "url": "https://github.com/Nels27/AgentsOfOlympus",
+      "homepageUrl": null,
+      "primaryLanguage": "Shell",
+      "languages": [
+        "Shell",
+        "Dockerfile"
+      ],
+      "stargazerCount": 0,
+      "pushedAt": "2026-01-01T00:00:00Z",
+      "isArchived": false,
+      "lastCommit": "2026-01-01T00:00:00Z",
+      "status": "none"
+    },
+    "Nels27/Portfolio-Website": {
+      "nameWithOwner": "Nels27/Portfolio-Website",
+      "description": "Fixture description",
+      "url": "https://github.com/Nels27/Portfolio-Website",
+      "homepageUrl": null,
+      "primaryLanguage": null,
+      "languages": [],
+      "stargazerCount": 0,
+      "pushedAt": "2026-01-01T00:00:00Z",
+      "isArchived": false,
+      "lastCommit": "2026-01-01T00:00:00Z",
+      "status": "none"
+    }
+  }
+}
