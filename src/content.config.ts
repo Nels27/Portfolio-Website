@@ -4,6 +4,7 @@ import { defineCollection, reference } from 'astro:content';
 import { parse } from 'yaml';
 import {
   experienceSchema,
+  githubSnapshotSchema,
   milestoneSchema,
   projectSchema,
   siteSchema,
@@ -43,5 +44,11 @@ export const collections = {
   site: defineCollection({
     loader: file('src/content/site.yaml', { parser: (text) => [{ id: 'site', ...parse(text) }] }),
     schema: siteSchema,
+  }),
+  github: defineCollection({
+    loader: file('src/data/github.json', {
+      parser: (text) => [{ id: 'snapshot', ...JSON.parse(text) }],
+    }),
+    schema: githubSnapshotSchema,
   }),
 };

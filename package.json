@@ -9,9 +9,10 @@
   "scripts": {
     "dev": "astro dev",
     "check": "astro check",
-    "build": "npm run check:content && astro build",
+    "build": "npm run check:content && npm run fetch:github && astro build",
     "test:unit": "vitest run --coverage",
-    "check:content": "tsx scripts/check-content.ts"
+    "check:content": "tsx scripts/check-content.ts",
+    "fetch:github": "tsx scripts/fetch-github.ts"
   },
   "dependencies": {
     "@astrojs/mdx": "8.1.6",
