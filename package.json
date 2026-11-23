@@ -3,12 +3,15 @@
   "version": "0.0.0",
   "private": true,
   "type": "module",
-  "engines": { "node": ">=24.22.3" },
+  "engines": {
+    "node": ">=24.22.3"
+  },
   "scripts": {
     "dev": "astro dev",
     "check": "astro check",
     "build": "astro build",
-    "test:unit": "vitest run --coverage"
+    "test:unit": "vitest run --coverage",
+    "check:content": "tsx scripts/check-content.ts"
   },
   "dependencies": {
     "@astrojs/mdx": "8.1.6",
