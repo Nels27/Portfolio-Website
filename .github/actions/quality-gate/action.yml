@@ -23,6 +23,6 @@ runs:
     - name: G2 type check
       shell: bash
       run: npm run check
-    - name: G3 unit tests
+    - name: G3 and G4 unit tests and coverage
       shell: bash
       run: npm run test:unit
