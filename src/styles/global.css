@@ -1,0 +1,14 @@
+:root { color-scheme: light; --text: #1a1a1a; --muted: #4a4a4a; --link: #0b4f9e; --line: #d0d0d0; }
+* { box-sizing: border-box; }
+body { margin: 0 auto; max-width: 46rem; padding: 0 1rem 3rem; background: #fff; color: var(--text); font: 1rem/1.6 system-ui, sans-serif; }
+a { color: var(--link); }
+img { max-width: 100%; height: auto; }
+h1, h2, h3 { line-height: 1.25; }
+header, footer { padding: 1rem 0; border-bottom: 1px solid var(--line); }
+footer { border: 0; border-top: 1px solid var(--line); margin-top: 3rem; }
+nav ul, .tracks { display: flex; flex-wrap: wrap; gap: 0.5rem 1.25rem; list-style: none; margin: 0; padding: 0; }
+.muted { color: var(--muted); }
+.card { border: 1px solid var(--line); border-radius: 0.5rem; margin: 1rem 0; padding: 1rem; }
+.card h3 { margin-top: 0; }
+.skip { position: absolute; left: -999px; }
+.skip:focus { left: 1rem; top: 1rem; background: #fff; padding: 0.5rem; }

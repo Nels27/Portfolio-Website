@@ -1,6 +1,26 @@
 ---
+import ProjectCard from '../components/ProjectCard.astro';
+import TrackSelector from '../components/TrackSelector.astro';
+import Base from '../layouts/Base.astro';
+import { rank } from '../lib/rank';
+import { loadAll, loadSite } from '../load';
+
+const site = await loadSite();
+const { projectEntries, projects, tracks } = await loadAll();
+const track = tracks.find((t) => t.data.default);
+if (!track) throw new Error('No default track');
+
+const ranked = rank(projects, track.id);
+const featured = ranked.filter((p) => p.data.featured);
+const ids = (featured.length > 0 ? featured : ranked.slice(0, 3)).map((p) => p.id);
+const shown = ids.flatMap((id) => projectEntries.filter((p) => p.id === id));
 ---
-<html lang="en">
-  <head><meta charset="utf-8" /><title>Nelson Raphael</title></head>
-  <body><h1>Nelson Raphael</h1></body>
-</html>
+
+<Base description={site.headline}>
+  <h1>{site.name}</h1>
+  <p>{site.headline}</p>
+  <h2>Choose a track</h2>
+  <TrackSelector tracks={tracks} />
+  <h2>{track.data.title}</h2>
+  {shown.map((p) => <ProjectCard project={p} />)}
+</Base>

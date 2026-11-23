@@ -1,0 +1,40 @@
+---
+import '../styles/global.css';
+import { loadAll, loadSite } from '../load';
+
+interface Props {
+  title?: string;
+  description: string;
+}
+const { title, description } = Astro.props;
+const site = await loadSite();
+const { tracks } = await loadAll();
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <title>{title ? `${title} | ${site.name}` : site.name}</title>
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to content</a>
+    <header>
+      <nav aria-label="Main">
+        <ul>
+          <li><a href="/">Home</a></li>
+          {tracks.map((t) => <li><a href={`/tracks/${t.id}/`}>{t.data.title}</a></li>)}
+          <li><a href="/journey/">Journey</a></li>
+          <li><a href="/colophon/">Colophon</a></li>
+        </ul>
+      </nav>
+    </header>
+    <main id="main"><slot /></main>
+    <footer>
+      <a href={site.github}>GitHub</a>{' '}<a href={site.linkedin}>LinkedIn</a>
+    </footer>
+  </body>
+</html>

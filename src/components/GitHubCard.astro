@@ -1,0 +1,27 @@
+---
+import { loadGitHub } from '../load';
+
+interface Props {
+  repo: string;
+}
+const { repo } = Astro.props;
+const data = (await loadGitHub()).repos[repo];
+---
+
+{
+  data ? (
+    <section class="card" data-testid="github-card">
+      <h2><a href={data.url}>{data.nameWithOwner}</a></h2>
+      {data.description && <p>{data.description}</p>}
+      <dl>
+        {data.languages.length > 0 && <><dt>Languages</dt><dd>{data.languages.join(', ')}</dd></>}
+        <dt>Stars</dt><dd>{data.stargazerCount}</dd>
+        {data.lastCommit && <><dt>Last commit</dt><dd>{data.lastCommit.slice(0, 10)}</dd></>}
+        <dt>Checks</dt><dd>{data.status.toLowerCase()}</dd>
+      </dl>
+      {data.isArchived && <p>This repository is archived.</p>}
+    </section>
+  ) : (
+    <p><a href={`https://github.com/${repo}`}>{repo} on GitHub</a></p>
+  )
+}

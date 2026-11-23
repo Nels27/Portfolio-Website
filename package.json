@@ -12,7 +12,9 @@
     "build": "npm run check:content && npm run fetch:github && astro build",
     "test:unit": "vitest run --coverage",
     "check:content": "tsx scripts/check-content.ts",
-    "fetch:github": "tsx scripts/fetch-github.ts"
+    "fetch:github": "tsx scripts/fetch-github.ts",
+    "test:e2e": "playwright test --grep-invert @smoke",
+    "test": "npm run test:unit && npm run test:e2e"
   },
   "dependencies": {
     "@astrojs/mdx": "8.1.6",

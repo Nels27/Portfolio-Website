@@ -1,0 +1,12 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  tracks: CollectionEntry<'tracks'>[];
+}
+const { tracks } = Astro.props;
+---
+
+<ul class="tracks" data-testid="track-selector">
+  {tracks.map((t) => <li><a href={`/tracks/${t.id}/`}>{t.data.title}</a></li>)}
+</ul>
