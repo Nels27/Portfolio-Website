@@ -1,0 +1,12 @@
+- id: seed-testing
+  name: "TODO(owner): testing skill"
+  category: testing
+  evidence: [charger-firmware-test-automation]
+- id: seed-infrastructure
+  name: "TODO(owner): infrastructure skill"
+  category: infrastructure
+  evidence: [portfolio-website]
+- id: seed-leadership
+  name: "TODO(owner): leadership skill"
+  category: leadership
+  evidence: [emerging-100-event-branding]

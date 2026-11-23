@@ -1,0 +1,16 @@
+- id: nonprofit
+  title: Non-profit work
+  headline: "TODO(owner): non-profit headline"
+  description: "TODO(owner): non-profit description"
+  order: 1
+- id: professional
+  title: Day to day role
+  headline: "TODO(owner): professional headline"
+  description: "TODO(owner): professional description"
+  order: 2
+- id: side-projects
+  title: Technical side projects
+  headline: "TODO(owner): side projects headline"
+  description: "TODO(owner): side projects description"
+  order: 3
+  default: true
