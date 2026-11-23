@@ -1,0 +1,13 @@
+---
+import Timeline from '../components/Timeline.astro';
+import Base from '../layouts/Base.astro';
+import { loadAll, loadSite } from '../load';
+
+const site = await loadSite();
+const { milestones } = await loadAll();
+---
+
+<Base title="Journey" description={`Career and education milestones of ${site.name}`}>
+  <h1>Journey</h1>
+  <Timeline milestones={milestones} />
+</Base>

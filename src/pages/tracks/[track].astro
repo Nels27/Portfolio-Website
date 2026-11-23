@@ -1,0 +1,48 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import ProjectCard from '../../components/ProjectCard.astro';
+import SkillList from '../../components/SkillList.astro';
+import Base from '../../layouts/Base.astro';
+import { formatPeriod } from '../../lib/dates';
+import { skillsForTrack } from '../../lib/evidence';
+import { rank } from '../../lib/rank';
+import { loadAll } from '../../load';
+
+export async function getStaticPaths() {
+  const { tracks } = await loadAll();
+  return tracks.map((track) => ({ params: { track: track.id }, props: { track } }));
+}
+interface Props {
+  track: CollectionEntry<'tracks'>;
+}
+const { track } = Astro.props;
+const { projectEntries, projects, experience, skills } = await loadAll();
+const ranked = rank(projects, track.id).flatMap((r) => projectEntries.filter((p) => p.id === r.id));
+const trackSkills = skillsForTrack(skills, projects, track.id);
+const roles = experience.filter((e) => e.data.tracks.includes(track.id));
+const title = (id: string) => projects.find((p) => p.id === id)?.data.title ?? id;
+---
+
+<Base title={track.data.title} description={track.data.description}>
+  <h1>{track.data.title}</h1>
+  <p>{track.data.headline}</p>
+  <p>{track.data.description}</p>
+  <h2>Projects</h2>
+  {ranked.map((p) => <ProjectCard project={p} />)}
+  {trackSkills.length > 0 && <h2>Skills</h2>}
+  {trackSkills.length > 0 && <SkillList skills={trackSkills} />}
+  {roles.length > 0 && <h2>Experience</h2>}
+  {
+    roles.map(({ data }) => (
+      <article data-testid="role">
+        <h3>{data.title}</h3>
+        <p>{data.organization}</p>
+        <p class="muted">{formatPeriod(data)}</p>
+        <ul>{data.highlights.map((h) => <li>{h}</li>)}</ul>
+        {data.projects.length > 0 && (
+          <ul>{data.projects.map((id) => <li><a href={`/projects/${id}/`}>{title(id)}</a></li>)}</ul>
+        )}
+      </article>
+    ))
+  }
+</Base>

@@ -1,0 +1,21 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { formatDate } from '../lib/dates';
+
+interface Props {
+  milestones: CollectionEntry<'milestones'>[];
+}
+const { milestones } = Astro.props;
+---
+
+<ol data-testid="timeline">
+  {
+    milestones.map(({ data }) => (
+      <li>
+        <p class="muted">{formatDate(data.date)}</p>
+        <p>{data.title}</p>
+        {data.detail && <p>{data.detail}</p>}
+      </li>
+    ))
+  }
+</ol>

@@ -1,0 +1,21 @@
+---
+import type { SkillWithEvidence } from '../lib/evidence';
+
+interface Props {
+  skills: SkillWithEvidence[];
+}
+const { skills } = Astro.props;
+---
+
+<ul data-testid="skills">
+  {
+    skills.map(({ skill, projects }) => (
+      <li data-testid="skill">
+        {skill.data.name}
+        <ul>
+          {projects.map((p) => <li><a href={`/projects/${p.id}/`}>{p.data.title}</a></li>)}
+        </ul>
+      </li>
+    ))
+  }
+</ul>

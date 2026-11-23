@@ -32,3 +32,16 @@ runs:
         GH_GRAPHQL_TOKEN: ${{ inputs.github-token }}
         SITE_URL: ${{ inputs.site-url }}
       run: npm run build
+    - name: Install Chromium
+      shell: bash
+      run: npx playwright install --with-deps chromium
+    - name: G6 browser tests
+      shell: bash
+      run: npm run test:e2e
+    - name: Upload the test report
+      if: failure()
+      uses: actions/upload-artifact@v7.0.2
+      with:
+        name: playwright-report-${{ github.run_attempt }}
+        path: playwright-report/
+        if-no-files-found: ignore

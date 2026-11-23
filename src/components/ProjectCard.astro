@@ -1,0 +1,16 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { formatPeriod } from '../lib/dates';
+
+interface Props {
+  project: CollectionEntry<'projects'>;
+}
+const { project } = Astro.props;
+const { data } = project;
+---
+
+<article class="card" data-testid="project-card">
+  <h3><a href={`/projects/${project.id}/`}>{data.title}</a></h3>
+  <p class="muted">{formatPeriod(data.period)}</p>
+  <p>{data.summary}</p>
+</article>
