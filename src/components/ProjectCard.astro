@@ -1,4 +1,5 @@
 ---
+import { Image } from 'astro:assets';
 import type { CollectionEntry } from 'astro:content';
 import { formatPeriod } from '../lib/dates';
 
@@ -7,9 +8,16 @@ interface Props {
 }
 const { project } = Astro.props;
 const { data } = project;
+const { cover, coverAlt } = data;
+if (cover && !coverAlt?.trim()) throw new Error(`Project "${project.id}" has a cover but no coverAlt`);
 ---
 
 <article class="card" data-testid="project-card">
+  {
+    cover && coverAlt && (
+      <Image src={cover} alt={coverAlt} widths={[400, 800, 1200]} sizes="(max-width: 46rem) 100vw, 46rem" />
+    )
+  }
   <h3><a href={`/projects/${project.id}/`}>{data.title}</a></h3>
   <p class="muted">{formatPeriod(data.period)}</p>
   <p>{data.summary}</p>

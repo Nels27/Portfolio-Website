@@ -1,4 +1,5 @@
 ---
+import { Image } from 'astro:assets';
 import { getCollection, render, type CollectionEntry } from 'astro:content';
 import GitHubCard from '../../components/GitHubCard.astro';
 import Base from '../../layouts/Base.astro';
@@ -17,6 +18,8 @@ interface Props {
 }
 const { project } = Astro.props;
 const { data } = project;
+const { cover, coverAlt } = data;
+if (cover && !coverAlt?.trim()) throw new Error(`Project "${project.id}" has a cover but no coverAlt`);
 const { Content } = await render(project);
 const { skills, tracks } = await loadAll();
 const projectSkills = skillsForProject(skills, project.id);
@@ -26,6 +29,17 @@ const projectTracks = tracks.filter((t) => data.tracks.some((ref) => ref.id === 
 <Base title={data.title} description={data.summary}>
   <h1>{data.title}</h1>
   <p>{data.summary}</p>
+  {
+    cover && coverAlt && (
+      <Image
+        src={cover}
+        alt={coverAlt}
+        widths={[400, 800, 1200]}
+        sizes="(max-width: 46rem) 100vw, 46rem"
+        priority
+      />
+    )
+  }
   <dl>
     <dt>Role</dt><dd>{data.role}</dd>
     <dt>Period</dt><dd>{formatPeriod(data.period)}</dd>
@@ -38,6 +52,14 @@ const projectTracks = tracks.filter((t) => data.tracks.some((ref) => ref.id === 
   {projectSkills.length > 0 && <h2>Skills shown</h2>}
   {projectSkills.length > 0 && <ul>{projectSkills.map((s) => <li>{s.data.name}</li>)}</ul>}
   <Content />
+  {
+    data.gallery.map((item) => (
+      <figure>
+        <Image src={item.src} alt={item.alt} widths={[400, 800, 1200]} sizes="(max-width: 46rem) 100vw, 46rem" />
+        {item.caption && <figcaption>{item.caption}</figcaption>}
+      </figure>
+    ))
+  }
   {data.demo && <p><a href={data.demo}>Live demo</a></p>}
   {data.repo && <GitHubCard repo={data.repo} />}
 </Base>
