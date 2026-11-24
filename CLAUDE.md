@@ -43,7 +43,7 @@ Data flow:
 
 `src/lib/` is pure: no Astro imports other than `astro/zod`, no filesystem, no network. That's what makes the 90% coverage gate achievable.
 
-CI: one composite action, `.github/actions/quality-gate/action.yml`, holds every automated gate. `pr.yml` uses it now; `main.yml` (deploy) and `nightly.yml` will use the same action, so a PR and a deploy can't run different checks. The job is named `quality-gate`, which is the required status check in the `main` ruleset. Never rename it.
+CI: one composite action, `.github/actions/quality-gate/action.yml`, holds every automated gate. `pr.yml` uses it now; `main.yml` (deploy) and `nightly.yml` will use the same action, so a PR and a deploy can't run different checks. The job is named `quality-gate`, which is the required status check in the `main` ruleset. Never rename it. Jobs run in the `mcr.microsoft.com/playwright:v1.65.1-noble` container, so the action installs no browser; the image tag must match `@playwright/test` in `package.json`.
 
 ## Traps verified against the pinned versions
 

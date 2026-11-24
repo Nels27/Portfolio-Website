@@ -68,7 +68,7 @@ Use these exact versions (no `^` or `~`). Do not upgrade them as part of a task.
 | Language | `typescript` 6.0.3, `@astrojs/check` 0.9.12, `@types/node` 24.19.2 | **Not TypeScript 7:** `@astrojs/check` rejects it at install. `tsconfig.json` extends `astro/tsconfigs/strict` |
 | Hosting | `wrangler` 4.166.0 | Workers static assets only |
 | Unit tests | `vitest` 5.1.1, `@vitest/coverage-v8` 5.1.1 | |
-| Browser tests | `@playwright/test` 1.65.1, `@axe-core/playwright` 4.14.0 | Chromium only |
+| Browser tests | `@playwright/test` 1.65.1, `@axe-core/playwright` 4.14.0 | Chromium only. CI runs in the matching `mcr.microsoft.com/playwright:v1.65.1-noble` image |
 | Images | `sharp` 0.35.5, `exifr` 7.1.3 | `sharp` also generates test images, including GPS EXIF. No EXIF-writing library is needed |
 | PDF text | `unpdf` 2.2.1 | Text extraction in tests |
 | Script runner | `tsx` 4.23.15 | |
@@ -395,7 +395,8 @@ A PR merges only when all of these pass:
 | G10 | Owner reads the PR and squash-merges | Owner | 01 |
 
 - G1–G8 run in one job named **`quality-gate`**, which is the required status check. The name never changes.
-- The steps live in `.github/actions/quality-gate/action.yml`. `pr.yml` and `main.yml` both use it, so a PR and a deploy can't run different checks. A task that adds a gate adds its step there. From task 07 on, the order is: check → unit → build → Chromium install → PDFs (from task 09) → E2E and axe.
+- The steps live in `.github/actions/quality-gate/action.yml`. `pr.yml` and `main.yml` both use it, so a PR and a deploy can't run different checks. A task that adds a gate adds its step there. From task 07 on, the order is: check → unit → build → PDFs (from task 09) → E2E and axe.
+- Every job that runs the action sets `container: mcr.microsoft.com/playwright:v1.65.1-noble`. The image already has Chromium and its system libraries, so the action installs no browser. The tag must match `@playwright/test` in `package.json`: bump both in the same PR, or G6 fails with a missing executable.
 - `npm audit --audit-level=high` runs as a non-blocking report.
 - Playwright reports upload as an artifact on failure.
 - **The agent must not weaken a gate:** no skipped or deleted tests, lowered thresholds, `continue-on-error`, `@ts-ignore`, or disabled axe rules. Only the task listed above may add a gate. Changing an existing gate needs the owner's approval.
