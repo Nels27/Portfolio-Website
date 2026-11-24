@@ -18,6 +18,7 @@
 
 **Notes:**
 - Never run `npx wrangler deploy` without `--dry-run`. Deploys run only from CI.
+- The `deploy` job runs in the same Playwright container as `pr.yml`. The quality gate action installs no browser, so without the container G6 fails.
 - The owner adds the secrets before merging, then works through the owner checklist in `CONTEXT.md`. The agent cannot verify a real deploy.
 
 - [ ] **Step 1: Start the branch**
@@ -68,6 +69,8 @@ permissions:
   contents: read
 jobs:
   deploy:
+    # Has Chromium for G6–G8. Must match @playwright/test in package.json.
+    container: mcr.microsoft.com/playwright:v1.65.1-noble
     runs-on: ubuntu-24.04
     timeout-minutes: 25
     # Only here: adding this to nightly.yml too would deadlock.
